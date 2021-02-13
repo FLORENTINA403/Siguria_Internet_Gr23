@@ -1,7 +1,10 @@
+import tkinter as tk
 import requests
 from pprint import pprint
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
+from tkinter.ttk import Combobox
+import tkinter.scrolledtext as st
 
 def get_all_forms(url):
     soup = bs(requests.get(url).content, "html.parser")
@@ -59,6 +62,48 @@ def scan_xss(url):
 if __name__ == "__main__":
     url = "http://testphp.vulnweb.com/login.php"
     print(scan_xss(url))
+
+#window
+window = tk.Tk()
+window.title("XSS Testing")
+
+#URL label
+url_label = tk.Label(window, text = 'Enter URL')
+url_label.configure(padx = 0, pady = 0)
+url_label.configure(font="TkFixedFont")
+url_label.configure(background="#EDF2F3")
+url_label.configure(foreground="#000000")
+url_label.place(x=10, y=12)
+
+#URL field
+url = tk.Entry(window)
+url.place(x=110, y=13, relheight=0.05, relwidth=0.53)
+url.configure(background="white")
+url.configure(disabledforeground="#a3a3a3")
+url.configure(font="TkFixedFont")
+url.configure(foreground="#000000")
+url.configure(highlightbackground="#d9d9d9")
+url.configure(highlightcolor="black")
+url.configure(insertbackground="black")
+url.configure(selectbackground="#c4c4c4")
+url.configure(selectforeground="black")
+
+def clicked():
+   res = url.get()
+   #label.configure(text=res)
+
+#BruteXSS button
+button = tk.Button(window, width=15,activebackground='#FFFFFF',command=clicked)
+button.configure(padx = 0, pady = 0,font =("Courier",10))
+button.place(x=450,y=11)
+button.configure(foreground="white")
+button.configure(background="gray")
+button.configure(activebackground="#FFFFFF")
+button.configure(text='''BruteXSS''')
+
+window.geometry("600x500+200+200")
+window['background']='#EDF2F3'
+window.mainloop()
 
 
 
