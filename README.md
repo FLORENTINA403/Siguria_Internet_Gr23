@@ -16,3 +16,17 @@ Download some important libraries like bs4, requests and start debugging.
 
 
 # Results
+
+![Alt text](/results/XSS1.png?raw=true "First look")
+
+![Alt text](/results/XSS2.png?raw=true "HTML forms")
+
+![Alt text](/results/XSS3.png?raw=true "Error")
+
+![Alt text](/results/XSS4.png?raw=true "Invalid URL")
+
+![Alt text](/results/XSS5.png?raw=true "Testing secure pages")
+
+![Alt text](/results/XSS6.png?raw=true "XSS vulnerability successful")
+
+
