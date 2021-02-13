@@ -7,14 +7,14 @@ from tkinter.ttk import Combobox
 import tkinter.scrolledtext as st
 from tkinter import messagebox
 
-def xss_target():
-  target=url.get()
+def xss_target(url):
+  target=url
   payload = "*script* alert('XSS'); /*script* "
   req = requests.post(target + payload)
   if payload in req.text:
     output.insert(tk.INSERT,"XSS Vulnerablity discovered!")
   else:
-    output.insert(tk.INSERT,"Secure")
+    output.insert(tk.INSERT,"Secure\n")
 
 
 def get_all_forms(url):
@@ -89,7 +89,7 @@ def scan_xss(url):
         error = e.read()
         return error        
     if True:        
-         return rez1 +"\n" + rez2 + "\n" + rez3 + "\n"+str(form_details)
+         return rez1 +"\n" + rez2 + "\n" + rez3 + "\n"+str(form_details) + "\n"
     else:
          return "something went worng"
     
@@ -119,15 +119,33 @@ url.configure(selectbackground="#c4c4c4")
 url.configure(selectforeground="black")
 
 def clicked():
+   full_scan = v1.get()
+   forms = v2.get()
    res = url.get()
-   if res.startswith("http://") != True and res.startswith("https://") != True:
-      messagebox.showerror("Error", "Please enter correct URL")
-      
+
+   if forms == 1:
+        if res.startswith("http://") != True and res.startswith("https://") != True:
+            messagebox.showerror("Error", "Please enter correct URL!")
+        else:
+            txt = scan_xss(res)
+            output.insert(tk.INSERT, txt)
+            
+            
+
+   elif full_scan == 1:
+       if res.startswith("http://") != True and res.startswith("https://") != True:
+           messagebox.showerror("Error", "Please enter correct URL!")
+       else:
+           xss_target(res)
+
    else:
-      txt = scan_xss(res)
-      output.insert(tk.INSERT, txt)
+       messagebox.showerror("Error", "Please select an option!")
 
-
+def clear():
+    output.delete('1.0', tk.END)
+    v1.set(0)
+    v2.set(0)
+    url.delete(0,tk.END)
 #BruteXSS button
 button = tk.Button(window, width=15,activebackground='#FFFFFF',command=clicked)
 button.configure(padx = 0, pady = 0,font =("Courier",10))
@@ -137,32 +155,32 @@ button.configure(background="gray")
 button.configure(activebackground="#FFFFFF")
 button.configure(text='''BruteXSS''')
 
-#TargetXSS button
-button = tk.Button(window, width=15,activebackground='#FFFFFF',command=xss_target)
+#Clear button
+button = tk.Button(window, width=15,activebackground='#FFFFFF',command=clear)
 button.configure(padx = 0, pady = 0,font =("Courier",10))
 button.place(x=450,y=40)
 button.configure(foreground="white")
 button.configure(background="gray")
 button.configure(activebackground="#FFFFFF")
-button.configure(text='''TargetXSS''')
+button.configure(text='''Clear''')
 
-#Methods
+#Full Scan
 v1 = tk.IntVar()
-c1 = tk.Checkbutton(window, variable = v1)
+c1 = tk.Checkbutton(window,variable = v1)
 c1.place(x=170, y=70)
 c1.configure(activebackground="#d9d9d9")
 c1.configure(activeforeground="#000000")
 c1.configure(background="#EDF2F3")
-c1.configure(text='''Methods''')
+c1.configure(text='''Full Scan''')
 
-#HTML Inputs
+#HTML Forms
 v2 = tk.IntVar()
-c2 = tk.Checkbutton(window, variable = v2)
+c2 = tk.Checkbutton(window,variable = v2)
 c2.place(x=270, y=70)
 c2.configure(activebackground="#d9d9d9")
 c2.configure(activeforeground="#000000")
 c2.configure(background="#EDF2F3")
-c2.configure(text='''HTML Inputs''')
+c2.configure(text='''HTML Forms''')
 
 #Output Label
 TLabel5 = tk.Label(window)
@@ -172,7 +190,7 @@ TLabel5.configure(foreground="#000000")
 TLabel5.configure(text='''Output''')
 
 #Output Box
-output = st.ScrolledText(window)
+output = st.ScrolledText(window,wrap=tk.WORD)
 output.place(relx=0.07, rely=0.27, relheight=0.40, relwidth=0.84)
 output.configure(background="white")
 output.configure(font="TkTextFont")
@@ -180,7 +198,9 @@ output.configure(foreground="black")
 output.configure(highlightbackground="#d9d9d9")
 output.configure(insertborderwidth="3")
 output.configure(width=10)
-output.configure(wrap="none")
+output.configure(state=tk.NORMAL)
+
+
 
 #Exit Button
 button = tk.Button(window, width=10, command=window.destroy)
