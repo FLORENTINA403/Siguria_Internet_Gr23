@@ -101,6 +101,52 @@ button.configure(background="gray")
 button.configure(activebackground="#FFFFFF")
 button.configure(text='''BruteXSS''')
 
+#Methods
+v1 = tk.IntVar()
+c1 = tk.Checkbutton(window, variable = v1)
+c1.place(x=170, y=70)
+c1.configure(activebackground="#d9d9d9")
+c1.configure(activeforeground="#000000")
+c1.configure(background="#EDF2F3")
+c1.configure(text='''Methods''')
+
+#HTML Inputs
+v2 = tk.IntVar()
+c2 = tk.Checkbutton(window, variable = v2)
+c2.place(x=270, y=70)
+c2.configure(activebackground="#d9d9d9")
+c2.configure(activeforeground="#000000")
+c2.configure(background="#EDF2F3")
+c2.configure(text='''HTML Inputs''')
+
+#Output Label
+TLabel5 = tk.Label(window)
+TLabel5.place(relx=0.03, rely=0.22, height=19, width=42)
+TLabel5.configure(background="#EDF2F3")
+TLabel5.configure(foreground="#000000")
+TLabel5.configure(text='''Output''')
+
+#Output Box
+output = st.ScrolledText(window)
+output.place(relx=0.07, rely=0.27, relheight=0.40, relwidth=0.84)
+output.configure(background="white")
+output.configure(font="TkTextFont")
+output.configure(foreground="black")
+output.configure(highlightbackground="#d9d9d9")
+output.configure(insertborderwidth="3")
+output.configure(width=10)
+output.configure(wrap="none")
+
+#Exit Button
+button = tk.Button(window, width=10, command=window.destroy)
+button.place(x=515, y=475)
+button.configure(foreground="white")
+button.configure(background="gray")
+button.configure(activebackground="#FFFFFF")
+output.configure(font="TkTextFont")
+button.configure(text='''Exit''')
+button.configure(padx = 0, pady = 0)
+
 window.geometry("600x500+200+200")
 window['background']='#EDF2F3'
 window.mainloop()
